@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-
+import Header from './Header'
+import Customize from './Customize'
 // Normalizes string as a slug - a string that is safe to use
 // in both URLs and html attributes
 import slugify from 'slugify';
@@ -97,14 +98,9 @@ class App extends Component {
 
     return (
       <div className="App">
-        <header>
-          <h1>ELF Computing | Laptops</h1>
-        </header>
+        <Header />        
         <main>
-          <form className="main__form">
-            <h2>Customize your laptop</h2>
-            {features}
-          </form>
+          <Customize />
           <section className="main__summary">
             <h2>Your cart</h2>
             {summary}
