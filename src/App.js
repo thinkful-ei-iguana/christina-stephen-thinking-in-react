@@ -39,7 +39,7 @@ class App extends Component {
   render() {
     const features = Object.keys(this.props.features).map((feature, idx) => {
       const featureHash = feature + '-' + idx;
-      const toBeChecked = this.state.selected[props.feature].name;
+      const toBeChecked = this.state.selected[feature].name;
       return (
         <Feature
           featureHash={featureHash}
