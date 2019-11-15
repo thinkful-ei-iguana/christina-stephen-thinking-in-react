@@ -100,7 +100,8 @@ class App extends Component {
       <div className="App">
         <Header />        
         <main>
-          <Customize />
+          <Customize 
+          features={props.features}/>
           <section className="main__summary">
             <h2>Your cart</h2>
             {summary}
