@@ -1,18 +1,10 @@
 import React, { Component } from 'react';
-import Header from './Header'
-import Customize from './Customize'
-// Normalizes string as a slug - a string that is safe to use
-// in both URLs and html attributes
-import slugify from 'slugify';
+import Header from './Header';
+import Feature from './Feature';
+import Summary from './Summary'
+import USCurrencyFormat from './currency';
 
 import './App.css';
-
-// This object will allow us to
-// easily convert numbers into US dollar values
-const USCurrencyFormat = new Intl.NumberFormat('en-US', {
-  style: 'currency',
-  currency: 'USD'
-});
 
 class App extends Component {
   state = {
@@ -47,32 +39,15 @@ class App extends Component {
   render() {
     const features = Object.keys(this.props.features).map((feature, idx) => {
       const featureHash = feature + '-' + idx;
-      const options = this.props.features[feature].map(item => {
-        const itemHash = slugify(JSON.stringify(item));
-        return (
-          <div key={itemHash} className="feature__item">
-            <input
-              type="radio"
-              id={itemHash}
-              className="feature__option"
-              name={slugify(feature)}
-              checked={item.name === this.state.selected[feature].name}
-              onChange={e => this.updateFeature(feature, item)}
-            />
-            <label htmlFor={itemHash} className="feature__label">
-              {item.name} ({USCurrencyFormat.format(item.cost)})
-            </label>
-          </div>
-        );
-      });
-
+      const toBeChecked = this.state.selected[props.feature].name;
       return (
-        <fieldset className="feature" key={featureHash}>
-          <legend className="feature__name">
-            <h3>{feature}</h3>
-          </legend>
-          {options}
-        </fieldset>
+        <Feature
+          featureHash={featureHash}
+          feature={feature}
+          options={this.props.features[feature]}
+          updateFeature={this.updateFeature}
+          toBeChecked={toBeChecked}
+        />
       );
     });
 
@@ -81,13 +56,11 @@ class App extends Component {
       const selectedOption = this.state.selected[feature];
 
       return (
-        <div className="summary__option" key={featureHash}>
-          <div className="summary__option__label">{feature} </div>
-          <div className="summary__option__value">{selectedOption.name}</div>
-          <div className="summary__option__cost">
-            {USCurrencyFormat.format(selectedOption.cost)}
-          </div>
-        </div>
+        <Summary
+          featureHash={featureHash}
+          feature={feature}
+          selectedOption={selectedOption}
+        />
       );
     });
 
@@ -98,11 +71,12 @@ class App extends Component {
 
     return (
       <div className="App">
-        <Header />        
+        <Header />
         <main>
-          <Customize 
-          features={props.features}
-          />
+          <form className="main__form" >
+            <h2>Customize your laptop</h2>
+            {features}
+          </form >
           <section className="main__summary">
             <h2>Your cart</h2>
             {summary}
