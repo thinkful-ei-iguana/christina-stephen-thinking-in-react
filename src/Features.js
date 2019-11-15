@@ -7,7 +7,7 @@ export default function Features() {
     style: 'currency',
     currency: 'USD'
   });
-  
+
   const features = Object.keys(this.props.features).map((feature, idx) => {
     const featureHash = feature + '-' + idx;
     const options = this.props.features[feature].map(item => {
@@ -32,7 +32,7 @@ export default function Features() {
     return (
       <fieldset className="feature" key={featureHash}>
         <legend className="feature__name">
-          <h3>{features}</h3>
+          <h3>{feature}</h3>
         </legend>
         {options}
       </fieldset>
